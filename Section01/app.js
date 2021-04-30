@@ -14,8 +14,8 @@ const shopRoutes = require('./routes/shop');
 
 const app = express();
 
-app.set('view engine', 'pug'); // Tell the express engine that you're using pug for dynamic html content
-app.set('views', 'views'); // Tell express where to find the views folder
+app.set('view engine', 'ejs'); // Tell the express engine that you're using pug for dynamic html content
+app.set('views', 'views'); // Tell express where to find the views folder -- This is the default setting so it's not technically needed
 
 // Request, resolve, next
 
@@ -26,7 +26,7 @@ app.use('/admin', adminData.routes); // Adding '/admin' also makes it so you don
 app.use(shopRoutes);
 
 app.use((req, res, next) => {
-    res.status(404).render('404', { docTitle: '404 Page Not Found' });
+    res.status(404).render('404', { docTitle: '404 Page Not Found', path: 'None' });
     //res.status(404).sendFile(path.join(__dirname, 'views', '404.html'));
 });
 
