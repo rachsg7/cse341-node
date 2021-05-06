@@ -1,7 +1,7 @@
-<%- include('includes/head.ejs') %>
+<%- include('../includes/head.ejs') %>
 
     <body>
-        <%- include ('includes/nav.ejs') %>
+        <%- include ('../includes/nav.ejs') %>
             <main>
                 <% if(prods.length > 0) { %>
                     <div class="grid">
@@ -13,14 +13,23 @@
                                     </h1>
                                 </header>
                                 <div class="card__image">
-                                    <img src="https://cdn.elearningindustry.com/wp-content/uploads/2016/05/top-10-books-every-college-student-read-1024x640.jpeg">
+                                    <img src="<%= product.imageUrl %>" alt="<%= product.title %>">
                                 </div>
                                 <div class="card__content">
-                                    <h2 class="product__price">$19.99</h2>
-                                    <p class="product__description">A very interesting book about even more interesting things.</p>
+                                    <h2 class="product__price">$
+                                        <%= product.price %>
+                                    </h2>
+                                    <p class="product__description">
+                                        <%= product.description %>
+                                    </p>
                                 </div>
                                 <div class="card__actions">
-                                    <button class="btn">Add to Card</button>
+                                    <a href="/admin/edit-product/<%= product.id %>?edit=true" class="btn">Edit</a>
+                                    <form action="/admin/delete-product" method="POST">
+                                        <input type="hidden" value="<%= product.id %>" name="productId">
+                                        <button class="btn">Delete</button>
+                                    </form>
+
                                 </div>
                             </article>
                             <% } %>
@@ -29,4 +38,4 @@
                         <h1>No Products Found</h1>
                         <% } %>
             </main>
-            <%- include ('includes/end.ejs') %>
+            <%- include ('../includes/end.ejs') %>

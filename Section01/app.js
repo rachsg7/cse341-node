@@ -9,8 +9,10 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 
-const adminData = require('./routes/admin');
+const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
+
+const errorController = require('./controllers/error');
 
 const app = express();
 
@@ -22,13 +24,14 @@ app.set('views', 'views'); // Tell express where to find the views folder -- Thi
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public'))); // Get clean absolute path for all OS
 
-app.use('/admin', adminData.routes); // Adding '/admin' also makes it so you don't have to add it to the admin.js page
+app.use('/admin', adminRoutes); // Adding '/admin' also makes it so you don't have to add it to the admin.js page
 app.use(shopRoutes);
 
-app.use((req, res, next) => {
-    res.status(404).render('404', { docTitle: '404 Page Not Found', path: 'None' });
-    //res.status(404).sendFile(path.join(__dirname, 'views', '404.html'));
-});
+/*app.use(app.router);
+adminRoutes.routes.initialize(app);
+shopRoutes.routes.initialize(app);*/
+
+app.use(errorController.get404);
 
 
 // Create the server
